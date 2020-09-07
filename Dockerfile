@@ -11,3 +11,5 @@ COPY Pipfile* ./
 RUN pipenv install --deploy --system
 
 COPY . .
+
+ENV PATH="/usr/local/pandora/pandora/bin:${PATH}"

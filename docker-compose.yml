@@ -1,0 +1,43 @@
+version: '3.7'
+
+x-default-networks: &default-networks
+  - stockspot
+
+services:
+    db:
+      container_name: pandora-db
+      image: mysql:5.7
+      restart: always
+      env_file: .env
+      networks: *default-networks
+
+    pandora-init:
+      container_name: pandora-db-init
+      image: pandora-api:local
+      env_file: .env
+      depends_on:
+        - db
+      links:
+        - db:pandora_db
+      command: ["docker-init.sh"]
+      networks: *default-networks
+
+    api:
+      container_name: pandora-api
+      image: pandora-api:local
+      depends_on:
+        - pandora-init
+      env_file: .env
+      entrypoint: ['./manage.py', 'runserver', '0:8000']
+      links:
+        - db:pandora_db
+      networks: *default-networks
+      ports:
+        - 8020:8000
+      restart: always
+      volumes:
+        - "${PWD}:/usr/local/pandora"
+
+networks:
+  stockspot:
+    name: stockspot
