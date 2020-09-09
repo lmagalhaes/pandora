@@ -1,15 +1,17 @@
 import os
 
 
-root_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-
 settings = {
     'debug': bool(os.getenv('DEBUG', False)),
     'database': dict(
-        db_host=os.getenv('EXT_DB_HOST'),
-        db_port=os.getenv('EXT_DB_PORT'),
+        db_host=os.getenv('DB_HOST'),
+        db_port=int(os.getenv('DB_PORT')),
         db_name=os.getenv('DB_NAME'),
-        db_username=os.getenv('EXT_DB_USERNAME'),
-        db_password=os.getenv('EXT_DB_PASSWORD'),
+        db_username=os.getenv('DB_USERNAME'),
+        db_password=os.getenv('DB_PASSWORD'),
     )
 }
+
+SQLALCHEMY_URI = 'mysql+mysqldb://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}'.format(
+    **settings['database']
+)
