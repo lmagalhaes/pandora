@@ -3,9 +3,8 @@
 build:
 	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local" .
 
-uninstall:
-	docker-compose stop
-	docker-compose down -v --remove-orphans
+uninstall: |stop
+	docker-compose down --remove-orphans -v
 
 init:
 	docker-compose run pandora-init
