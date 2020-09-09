@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "58df41cfa4dba3b05b1e00a62b9ffe26778729ec33ae362700eab1f131bca4da"
+            "sha256": "66fa335449192b465acbc3f61d64eb6a62955281b525c26fcfe4bb0823aab328"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -22,6 +22,13 @@
             ],
             "index": "pypi",
             "version": "==1.4.2"
+        },
+        "dictalchemy": {
+            "hashes": [
+                "sha256:a08b1463b5cd849158c77701da67be4fbb3080de3ad08abb165710aa63987809"
+            ],
+            "index": "pypi",
+            "version": "==0.1.2.7"
         },
         "falcon": {
             "hashes": [

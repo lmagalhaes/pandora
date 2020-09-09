@@ -12,6 +12,7 @@ gunicorn = "*"
 alembic = "*"
 sqlalchemy = "*"
 sqlalchemy-utils = "*"
+dictalchemy = "*"
 
 [requires]
 python_version = "3.7"
