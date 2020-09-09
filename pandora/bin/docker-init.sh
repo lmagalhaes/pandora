@@ -7,3 +7,8 @@ until  mysql -h "${DB_HOST}" -u "${DB_USERNAME}" -P "${DB_PORT}" -p"${DB_PASSWOR
 done
 
 echo "MySQL is up - executing command"
+
+env
+
+echo "Creating initial tables"
+alembic upgrade head
