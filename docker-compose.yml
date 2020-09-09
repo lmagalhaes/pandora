@@ -9,6 +9,8 @@ services:
       image: mysql:5.7
       restart: always
       env_file: .env
+      ports:
+        - 3336:3306
       networks: *default-networks
 
     pandora-init:
@@ -28,7 +30,12 @@ services:
       depends_on:
         - pandora-init
       env_file: .env
-      entrypoint: ['./manage.py', 'runserver', '0:8000']
+      entrypoint: ["gunicorn"]
+      command: [
+        "--reload",
+        "-b 0.0.0.0:8000",
+        "--log-level=debug",
+        "pandora.api.server:api"]
       links:
         - db:pandora_db
       networks: *default-networks
