@@ -33,40 +33,40 @@ class BaseModel:
 
 
 class PersonRelatesToPerson(BaseModel, Base):
-    __tablename__ = 'person_friends'
+    __tablename__ = __person_relationship_table_name__
 
-    person_id = Column(ForeignKey('persons.id'), primary_key=True)
-    friend_id = Column(ForeignKey('persons.id'), primary_key=True)
+    person_id = Column(ForeignKey('person.id'), primary_key=True)
+    friend_id = Column(ForeignKey('person.id'), primary_key=True)
 
     person = relationship("Person", foreign_keys=[person_id], uselist=False)
     friend = relationship("Person", foreign_keys=[friend_id], uselist=False)
 
 
 class PersonLikesFood(BaseModel, Base):
-    __tablename__ = 'person_foods'
+    __tablename__ = __person_likes_food_table_name__
 
-    person_id = Column(ForeignKey('persons.id'), primary_key=True)
-    food_id = Column(ForeignKey('foods.id'), primary_key=True)
+    person_id = Column(ForeignKey('person.id'), primary_key=True)
+    food_id = Column(ForeignKey('food.id'), primary_key=True)
 
 
 class CompanyEmploysPerson(Base):
-    __tablename__ = 'company_employees'
+    __tablename__ = __company_employs_person_table_name__
 
-    company_id = Column(ForeignKey('companies.id'), primary_key=True)
-    person_id = Column(ForeignKey('persons.id'), primary_key=True)
+    company_id = Column(ForeignKey('company.id'), primary_key=True)
+    person_id = Column(ForeignKey('person.id'), primary_key=True)
 
 
 class Company(BaseModel, Base):
-    __tablename__ = 'companies'
+    __tablename__ = __company_table_name__
 
     id = Column(Integer, primary_key=True)
     name = Column(String(32), unique=True)
 
-    employees = relationship('Person', secondary=CompanyEmploysPerson.__tablename__, back_populates=__tablename__)
+    employees = relationship('Person', secondary=CompanyEmploysPerson.__tablename__, back_populates='companies')
 
 
 class Person(BaseModel, Base):
-    __tablename__ = 'persons'
+    __tablename__ = __person_table_name__
 
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
@@ -78,7 +78,7 @@ class Person(BaseModel, Base):
     address = Column(String(255))
     tags = Column(ScalarListType())
 
-    foods = relationship('Food', secondary=PersonLikesFood.__tablename__, back_populates=__tablename__)
+    foods = relationship('Food', secondary=PersonLikesFood.__tablename__, back_populates='persons')
 
     companies = relationship('Company', secondary=CompanyEmploysPerson.__tablename__, back_populates='employees')
 
@@ -86,13 +86,13 @@ class Person(BaseModel, Base):
 
 
 class Food(BaseModel, Base):
-    __tablename__ = 'foods'
+    __tablename__ = __food_table_name__
 
     id = Column(Integer, primary_key=True)
     name = Column(String(15), nullable=False, unique=True)
     is_fruit = Column(Boolean, default=False)
 
-    persons = relationship('Person', secondary=PersonLikesFood.__tablename__, back_populates=__tablename__)
+    persons = relationship('Person', secondary=PersonLikesFood.__tablename__, back_populates='foods')
 
 
 #
