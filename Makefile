@@ -5,13 +5,14 @@ help:
 	@echo "    build"
 	@echo "        Build container image"
 	@echo "    install"
-	@echo "        Build, initialize and install application"
+	@echo "        Build, configure and install application"
 	@echo "    uninstall"
 	@echo "        Uninstall all containers and remove volumes and network ** Highly destructable **"
 	@echo '    init_db'
 	@echo '        Initiliaze dependencies (Database, etc)'
 	@echo '    load_db'
-	@echo '        Initiliaze dependencies (Database, etc)'
+	@echo '        Load/reload data person/company data from the resources folder the database'
+	@echo '        Attention: If the database is already populated, this command will delete and recreate everything'
 	@echo '    migration'
 	@echo '        Run migrations'
 	@echo '    start'
