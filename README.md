@@ -83,7 +83,9 @@ To run the unit tests simply call `make test`.
 
 It will use run the testing container and run the unittests.
 
-After the tests finish running, you can check the coverage by opening `coverage/index.htm` in the browser.
+After the tests finish running, you can check the coverage by opening `coverage/index.html` in the browser.
+
+The coverage/index.html can be found on the root folder.
 
 # API endpoints
 
