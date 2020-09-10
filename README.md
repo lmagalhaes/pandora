@@ -77,6 +77,13 @@ The message `Welcome to Pandora Api` should show up, meaning the applications is
 
 *Obs:* You can simply run `make` or `make help` for a list of all available commands.
  
+# Running tets
+
+To run the unit tests simply call `make test`.
+
+It will use run the testing container and run the unittests.
+
+After the tests finish running, you can check the coverage by opening `coverage/index.htm` in the browser.
 
 # API endpoints
 
