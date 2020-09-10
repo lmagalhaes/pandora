@@ -12,4 +12,6 @@ RUN pipenv install --deploy --system
 
 COPY . .
 
-ENV PATH="/usr/local/pandora/pandora/bin:${PATH}"
+ENV APP_HOME='/usr/local/pandora'
+ENV APP_BIN="${APP_HOME}/pandora/bin"
+ENV PATH="${APP_HOME}:${APP_BIN}:${PATH}"

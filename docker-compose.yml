@@ -13,7 +13,7 @@ services:
         - 3336:3306
       networks: *default-networks
 
-    pandora-init:
+    init-db:
       container_name: pandora-db-init
       image: pandora-api:local
       env_file: .env
@@ -24,15 +24,29 @@ services:
       command: ["docker-init.sh"]
       networks: *default-networks
 
+    load-db-data:
+      container_name: pandora-load-data
+      image: pandora-api:local
+      env_file: .env
+      depends_on:
+        - db
+      links:
+        - db:pandora_db
+      command: ["load-resources"]
+      networks: *default-networks
+
     api:
       container_name: pandora-api
       image: pandora-api:local
       depends_on:
-        - pandora-init
+        - init-db
       env_file: .env
       entrypoint: ["gunicorn"]
       command: [
         "--reload",
+        "--timeout=1",
+        "--worker-class=gthread",
+        "--threads=3",
         "-b 0.0.0.0:8000",
         "--log-level=debug",
         "pandora.api.server:api"]

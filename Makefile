@@ -8,7 +8,9 @@ help:
 	@echo "        Build, initialize and install application"
 	@echo "    uninstall"
 	@echo "        Uninstall all containers and remove volumes and network ** Highly destructable **"
-	@echo '    init'
+	@echo '    init_db'
+	@echo '        Initiliaze dependencies (Database, etc)'
+	@echo '    load_db'
 	@echo '        Initiliaze dependencies (Database, etc)'
 	@echo '    migration'
 	@echo '        Run migrations'
@@ -24,13 +26,16 @@ help:
 build:
 	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local" .
 
-install: |build init start
+install: |build init_db load_db start
 
 uninstall: |stop
 	docker-compose down --remove-orphans -v
 
-init:
-	docker-compose run pandora-init
+init_db:
+	docker-compose run init-db
+
+load_db:
+	docker-compose run load-db-data
 
 start:
 	docker-compose up -d api
