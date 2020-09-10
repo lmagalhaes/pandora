@@ -11,6 +11,8 @@ services:
       env_file: .env
       ports:
         - 3336:3306
+      volumes:
+        - "db:/var/lib/mysql"
       networks: *default-networks
 
     init-db:
@@ -66,9 +68,12 @@ services:
       image: pandora-test:local
       env_file: .env
       entrypoint: ["run_tests.sh"]
-      restart: never
       volumes:
         - "${PWD}:/usr/local/pandora"
+
+volumes:
+  db:
+    driver: local
 
 networks:
   stockspot:
