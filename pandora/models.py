@@ -103,14 +103,14 @@ class Person(BaseModel, Base):
         back_populates='employees'
     )
 
-    person_friends = relationship(
+    personal_friends = relationship(
         'PersonRelatesToPerson',
         primaryjoin=(id == PersonRelatesToPerson.__table__.c.person_id)
     )
 
     @property
     def friends(self):
-        return [friend.friend for friend in self.person_friends]
+        return [friend.friend for friend in self.personal_friends]
 
     def common_friends_with(self, another_person):
         return list(

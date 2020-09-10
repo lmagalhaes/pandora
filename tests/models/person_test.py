@@ -8,7 +8,7 @@ class TestFriendsAttribute:
         paula = Person(id=2)
         ana = Person(id=3)
 
-        luca.person_friends = [
+        luca.personal_friends = [
             generate_mocked_relationship(luca, paula),
             generate_mocked_relationship(luca, ana)
         ]
@@ -23,8 +23,8 @@ class TestCommonFriendsMethod:
         paula = Person(id=2)
         fred = Person(id=3)
 
-        luca.person_friends = [generate_mocked_relationship(luca, fred)]
-        paula.person_friends = []
+        luca.personal_friends = [generate_mocked_relationship(luca, fred)]
+        paula.personal_friends = []
 
         assert [] == luca.common_friends_with(paula)
 
@@ -35,12 +35,12 @@ class TestCommonFriendsMethod:
         ana = Person(id=4)
         mike = Person(id=5)
 
-        luca.person_friends = [
+        luca.personal_friends = [
             generate_mocked_relationship(luca, fred),
             generate_mocked_relationship(luca, ana)
         ]
 
-        paula.person_friends = [
+        paula.personal_friends = [
             generate_mocked_relationship(paula, ana),
             generate_mocked_relationship(paula, mike)
         ]

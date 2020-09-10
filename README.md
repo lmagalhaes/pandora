@@ -181,7 +181,7 @@ If they have no common friends or friends do match the above criteria the common
 	},
 	"person2": {
 		"id": 4,
-  		"name": "Rosemary Hayes",
+		"name": "Rosemary Hayes",
 		"has_died": true,
 		"eye_color": "blue",
 		"email": "rosemaryhayes@earthmark.com",
@@ -190,7 +190,17 @@ If they have no common friends or friends do match the above criteria the common
 		"address": "130 Bay Parkway, Marshall, Virgin Islands, 298",
 		"tags": ["officia", "voluptate", "aute", "consequat", "aliqua", "do", "magna"]
 	},
-	"commons_friends": []
+	"common_friends": [{
+		"id": 2,
+		"name": "Decker Mckenzie",
+		"has_died": false,
+		"eye_color": "brown",
+		"email": "deckermckenzie@earthmark.com",
+		"age": 60,
+		"phone": "+1 (893) 587-3311",
+		"address": "492 Stockton Street, Lawrence, Guam, 4854",
+		"tags": ["veniam", "irure", "mollit", "sunt", "amet", "fugiat", "ex"]
+	}]
 }
 ```
 If any othe the given ids does not belong to any person:

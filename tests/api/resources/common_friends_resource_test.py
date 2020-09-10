@@ -75,12 +75,12 @@ class TestOnGet:
         vanessa = generate_person(4, 'vanessa')
         carla = generate_person(5, 'carla')
 
-        ana.person_friends = [
+        ana.personal_friends = [
             generate_mocked_relationship(ana, marco),
             generate_mocked_relationship(ana, vanessa),
         ]
 
-        luca.person_friends = [
+        luca.personal_friends = [
             generate_mocked_relationship(ana, vanessa),
             generate_mocked_relationship(ana, carla),
         ]
@@ -121,13 +121,13 @@ class TestOnGet:
         carla = generate_person(5, 'carla')
         carla.has_died = True
 
-        ana.person_friends = [
+        ana.personal_friends = [
             generate_mocked_relationship(ana, marco),
             generate_mocked_relationship(ana, vanessa),
             generate_mocked_relationship(ana, carla),
         ]
 
-        luca.person_friends = [
+        luca.personal_friends = [
             generate_mocked_relationship(ana, vanessa),
             generate_mocked_relationship(ana, carla),
         ]
