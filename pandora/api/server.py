@@ -17,13 +17,12 @@ class PandoraApi(falcon.API):
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.logger.debug('Starting Pandora Api')
-        self.configs: settings = configs
+        self.configs = configs
         self.db_session = self.create_db_session()
 
     def create_db_session(self):
         self.logger.debug('Creating DB session')
         engine = create_engine(self.configs.SQLALCHEMY_URI)
-        # engine = create_engine(self.configs.SQLALCHEMY_URI, echo=self.configs.DEBUG)
         return Session(bind=engine)
 
 
