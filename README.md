@@ -26,30 +26,35 @@ also uses:
 
 # How to install
 
-To install the application is just a matter of running one command, by first you need to make suree
+To install the application is just a matter of running one command, by first you need to make sure
 all the installation dependencies are resolved.
 
 ## Dependencies
 
-Docker - [How to install](https://docs.docker.com/get-docker/)
+The Application and its dependencies are fully containerized and rely on Docker and Docker-compose to manage 
+the containers and uses of Make as our build automation tool.
 
-Docker Compose - [How to install](https://docs.docker.com/compose/install/)
+So, if you don't have them installed already, please follow the links below:
 
-[Make](https://en.wikipedia.org/wiki/Make_%28software%29)
+* [Docker](https://www.docker.com/) - Instructions to [install](https://docs.docker.com/get-docker/)
+
+* [Docker Compose] - Instruction to [install](https://docs.docker.com/compose/install/)
+
+* [Make](https://en.wikipedia.org/wiki/Make_%28software%29)
 
 
 ## Installation
 
 Once the dependencies are installed, just follow the simple steps below to have the API up and running.
 
-* Clone the repo and change the directory to the newly cloned folder.
+Clone the repo and change the directory to the newly cloned folder.
 
 ```bash
 git clone https://github.com/lmagalhaes/pandora.git
 cd pandora
 ```
 
-* Use the command `make install` to trigger the installation.
+Use the command `make install` to trigger the installation.
 
 ```
 make install 
@@ -59,26 +64,34 @@ The `make install` command build images, configure dependencies and install the 
 
 When the command is finished you can access the API by accessing [127.0.0.1:8020](http://120.0.0.1:8020) in your browser.
 
-The message `Welcome to Pandora Api` should show up, meaning the applications if working.
+The message `Welcome to Pandora Api` should show up, meaning the applications is working.
 
+*Obs:* You can simply run `make` or `make help` for a list of all available commands.
+ 
 
 # API endpoints
 
 The API provide 4 endpoints:
 
-### [Welcome endpoit](http://120.0.0.1:8020)
+
+### Welcome endpoit
 This is just a simple welcome message and can be used as health check, to make sure the API is running.
 
 **URI:**: `GET /`
 
-**Response:** Welcome message 
+**Response:** Welcome message
 
-### Company Employees Endpoint
+**Status code**: 200 
+
+
+### Company Endpoint
 Given a company id, returns the company details (id and name) and a list of its employees. 
 
 **URI**: `GET /company/{company_id:int}`
+
 **Status code**: 200
-**Response**: 
+
+**Response**:
 ```json
 {
   "id": 1,
@@ -101,11 +114,14 @@ If the given id does not belong to any company:
 **Status code**: `404`
 **Response** Company with id (0) not found
  
+
 ### Person Endpoint
-Given a person id, returns the following person details: username, age and preferred food (fruits and vegetables
+Given a person id, returns the person details (username, age and his/her preferred fruits and vegetables)
 
 **URI** `GET /person/{person_id:int}`
+
 **Status code:**: 200
+
 **Response**: 
 ```json
 {
@@ -121,11 +137,12 @@ If the given id does not belong to any person:
 
 **Response** Person with id (0) not found
 
+
 ### Person Common Friends With Another Person
 Given a person id and another person id, returns the details for each person and a detailed list of all their common friends,
 that matches the following criteria: `eye_color == 'bronw'` and `has_died == false`
 
-If they have no common friends that match the above criteria the commons_friends will be an empty list. 
+If they have no common friends or friends do match the above criteria the commons_friends will be an empty list. 
 
 **URI** `GET /person/{person_id:int}/common-friends/{another_person_id:int}`
 
