@@ -103,10 +103,17 @@ class Person(BaseModel, Base):
         back_populates='employees'
     )
 
-    friends = relationship(
+    person_friends = relationship(
         'PersonRelatesToPerson',
         primaryjoin=(id == PersonRelatesToPerson.__table__.c.person_id)
     )
+
+    @property
+    def friends(self):
+        return [friend.friend for friend in self.person_friends]
+
+    def common_friends_with(self, another_person):
+        return set(self.friends).intersection(set(another_person.friends))
 
 
 class Food(BaseModel, Base):
