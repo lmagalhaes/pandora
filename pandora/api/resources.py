@@ -42,38 +42,12 @@ class CompanyResource(BaseResource):
     def on_get(self, request, response, id_company):
         company: Company = self.db_session.query(Company).filter(Company.id == id_company).one_or_none()
         if company:
-            response.body = json.dumps({'employees': [dict(employee) for employee in company.employees]})
+            response.body = json.dumps({
+                **dict(company),
+                'employees': [dict(employee) for employee in company.employees]})
         else:
             response.status = falcon.HTTP_404
             response.body = f'Company with id ({id_company}) not found'
-
-
-class CommonFriendsResource(BaseResource):
-
-    routes = [
-        '/person/{id_person:int}/friends/{id_another_person:int}/'
-    ]
-
-    def on_get(self, request, response, id_person, id_another_person):
-
-        person, another_person = self.db_session.query(Person).filter(
-            Person.id.in_([id_person, id_another_person])
-        ).all()
-
-        commons_friends = [
-            dict(friend)
-            for friend in person.common_friends_with(another_person)
-            if not self.filter_out(friend)
-        ]
-
-        response.body = json.dumps(dict(
-            person1=dict(person),
-            person2=dict(another_person),
-            commons_friends=commons_friends
-        ))
-
-    def filter_out(person: Person) -> bool:
-        return bool(person.has_died) or person.eye_color != 'brown'
 
 
 class PersonResource(BaseResource):
@@ -82,7 +56,7 @@ class PersonResource(BaseResource):
         '/person/{id_person:int}/'
     ]
 
-    def on_get(self, request, response, id_person, id_another_person=None):
+    def on_get(self, request, response, id_person):
         person = self.db_session.query(Person).filter(Person.id == id_person).one_or_none()
         if not person:
             response.status = falcon.HTTP_404
@@ -96,3 +70,37 @@ class PersonResource(BaseResource):
             else:
                 vegetables.append(food.name)
         response.body = json.dumps({'usename': person.name, 'age': person.age, 'fruits': fruits, 'vegetables': vegetables})
+
+
+class CommonFriendsResource(BaseResource):
+
+    routes = [
+        '/person/{id_person:int}/friends/{id_another_person:int}/'
+    ]
+
+    def on_get(self, request, response, id_person, id_another_person):
+        filter_ = Person.id.in_([id_person, id_another_person])
+        people = self.db_session.query(Person).filter(filter_).all()
+
+        if len(people) != 2:
+            missing_id = id_person if people[0].id == id_another_person else id_another_person
+            response.body = 'Person with id ({}) not found'.format(missing_id)
+            response.status = falcon.HTTP_404
+            return
+
+        person, another_person = people
+        commons_friends = [
+            dict(friend)
+            for friend in person.common_friends_with(another_person)
+            if self.filter_in(friend)
+        ]
+
+        response.body = json.dumps(dict(
+            person1=dict(person),
+            person2=dict(another_person),
+            common_friends=commons_friends
+        ))
+
+    def filter_in(self, person):
+        return not bool(person.has_died) and person.eye_color == 'brown'
+
