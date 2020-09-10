@@ -17,7 +17,7 @@ from pandora.models import Company, PersonRelatesToPerson, Person, Food
 engine = create_engine(settings.SQLALCHEMY_URI)
 
 
-print('Recreating tables...')
+print('Recreating tables... this may take a while')
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
@@ -65,10 +65,10 @@ for id_, person in enumerate(people, start=1):
     company_id = int(person['company_id'])
     for friend in person['friends']:
         friend_id = friend['index']+1
-        if friend_id != id_:
+        if friend_id == id_:
             continue
         relation = PersonRelatesToPerson(person=persons_dict[id_], friend=persons_dict[friend_id])
-        persons_dict[id_].friends.append(relation)
+        persons_dict[id_].personal_friends.append(relation)
     persons_dict[id_].foods = foods
     persons_dict[id_].companies = [companies_dict[company_id]]
 session.add_all(persons_dict.values())

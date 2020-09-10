@@ -33,6 +33,8 @@ services:
       links:
         - db:pandora_db
       command: ["load-resources"]
+      volumes:
+        - "${PWD}:/usr/local/pandora"
       networks: *default-networks
 
     api:
