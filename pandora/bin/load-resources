@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import os
+import sys
+
+
+sys.path.append(os.getenv('APP_HOME'))
+
+
+import json
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from pandora.models import Base
+from pandora import settings
+from pandora.models import Company, PersonRelatesToPerson, Person, Food
+
+
+engine = create_engine(settings.SQLALCHEMY_URI)
+
+
+print('Recreating tables...')
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
+
+SessionMaker: sessionmaker = sessionmaker(bind=engine)
+session: Session = SessionMaker()
+
+ROOT_PATH = os.path.join(os.path.abspath(os.path.dirname(__name__)))
+RESOURCES_FOLDER = os.path.join(ROOT_PATH, 'resources')
+
+print(f'Loading companies')
+companies_dict = {}
+companies_file = os.path.join(RESOURCES_FOLDER, 'companies.json')
+companies = json.load(open(companies_file))
+for id_, company in enumerate(companies, start=1):
+    companies_dict[id_] = Company.from_dict({'id': id_, 'name': company['company']})
+session.add_all(companies_dict.values())
+session.commit()
+print(f'{len(companies)} companies loaded.')
+
+
+print('Parsing people...')
+people_file = os.path.join(RESOURCES_FOLDER, 'people.json')
+people = json.load(open(people_file))
+foods_set = set()
+persons_dict = {}
+for id_, person in enumerate(people, start=1):
+    person['_id'] = id_
+    foods_set.update(set(person['favouriteFood']))
+    persons_dict[id_] = Person.from_dict(person)
+
+print('Loading foods...')
+fruits_list = ['apple', 'banana', 'orange', 'strawberry']
+foods_dict = {}
+for key, value in enumerate(foods_set, start=1):
+    is_fruit = value in fruits_list
+    foods_dict[value] = Food.from_dict(dict(id=key, name=value, is_fruit=is_fruit))
+session.add_all(foods_dict.values())
+session.commit()
+print(f'{len(foods_set)} types of food loaded.')
+
+
+print('Loading people...')
+for id_, person in enumerate(people, start=1):
+    foods = [foods_dict[food] for food in person['favouriteFood']]
+    company_id = int(person['company_id'])
+    for friend in person['friends']:
+        friend_id = friend['index']+1
+        if friend_id != id_:
+            continue
+        relation = PersonRelatesToPerson(person=persons_dict[id_], friend=persons_dict[friend_id])
+        persons_dict[id_].friends.append(relation)
+    persons_dict[id_].foods = foods
+    persons_dict[id_].companies = [companies_dict[company_id]]
+session.add_all(persons_dict.values())
+session.commit()
+print(f'{len(people)} people loaded.')
