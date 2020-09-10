@@ -24,9 +24,6 @@ class BaseResource:
         for route in self.routes:
             self._api.add_route(route, self)
 
-    def get_configs(self):
-        return self._api.configs
-
 
 class WelcomeResource(BaseResource):
     def on_get(self, request, response):
