@@ -1,45 +1,10 @@
 import json
-import pytest
-from falcon import Request, Response, HTTP_404
-from falcon.testing import create_environ
+from falcon import HTTP_404
 from unittest.mock import MagicMock
 
 from pandora.api.resources import CommonFriendsResource
 from pandora.models import Person
-from tests.models.person_test import build_mocked_relationship
-
-@pytest.fixture
-def falcon_request():
-    env = create_environ(query_string='')
-    request = Request(env)
-    return request
-
-
-@pytest.fixture
-def falcon_response():
-    return Response()
-
-
-@pytest.fixture
-def db_session_mock():
-    filter_mock = MagicMock(return_value=MagicMock())
-    db_session_mock = MagicMock()
-    db_session_mock.query.return_value = filter_mock
-    return db_session_mock
-
-
-def generate_person(id_, name):
-    return Person.from_dict({
-        "id": id_,
-        "name": name,
-        "has_died": False,
-        "eye_color": "brown",
-        "email": f"{name}@{name}.com",
-        "age": 61,
-        "phone": "+1 (910) 567-3630",
-        "address": "628 Sumner Place",
-        "tags": []
-    })
+from tests.conftest import generate_person, generate_mocked_relationship
 
 
 class TestOnGet:
@@ -111,13 +76,13 @@ class TestOnGet:
         carla = generate_person(5, 'carla')
 
         ana.person_friends = [
-            build_mocked_relationship(ana, marco),
-            build_mocked_relationship(ana, vanessa),
+            generate_mocked_relationship(ana, marco),
+            generate_mocked_relationship(ana, vanessa),
         ]
 
         luca.person_friends = [
-            build_mocked_relationship(ana, vanessa),
-            build_mocked_relationship(ana, carla),
+            generate_mocked_relationship(ana, vanessa),
+            generate_mocked_relationship(ana, carla),
         ]
 
         api_mock = MagicMock()
@@ -157,14 +122,14 @@ class TestOnGet:
         carla.has_died = True
 
         ana.person_friends = [
-            build_mocked_relationship(ana, marco),
-            build_mocked_relationship(ana, vanessa),
-            build_mocked_relationship(ana, carla),
+            generate_mocked_relationship(ana, marco),
+            generate_mocked_relationship(ana, vanessa),
+            generate_mocked_relationship(ana, carla),
         ]
 
         luca.person_friends = [
-            build_mocked_relationship(ana, vanessa),
-            build_mocked_relationship(ana, carla),
+            generate_mocked_relationship(ana, vanessa),
+            generate_mocked_relationship(ana, carla),
         ]
 
         api_mock = MagicMock()

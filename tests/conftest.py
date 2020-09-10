@@ -38,3 +38,11 @@ def generate_person(id_, name):
         "address": "628 Sumner Place",
         "tags": []
     })
+
+
+def generate_mocked_relationship(person1, person2):
+    mocked_relationship = MagicMock()
+    mocked_relationship.person = person1
+    mocked_relationship.friend = person2
+
+    return mocked_relationship
