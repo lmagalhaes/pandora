@@ -15,6 +15,8 @@ help:
 	@echo '        Attention: If the database is already populated, this command will delete and recreate everything'
 	@echo '    migration'
 	@echo '        Run migrations'
+	@echo '    test'
+	@echo '        Run unit tests'
 	@echo '    start'
 	@echo '        Start application (It does not install the application, just start containers)'
 	@echo '    stop'
@@ -25,7 +27,8 @@ help:
 .PHONY: help
 
 build:
-	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local" .
+	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local" --target prod-image .
+	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-test:local" --target test .
 
 install: |build init_db load_db start
 
@@ -46,3 +49,6 @@ stop:
 
 status:
 	docker ps | grep pandora
+
+test:
+	docker-compose run test

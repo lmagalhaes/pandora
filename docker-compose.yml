@@ -59,6 +59,15 @@ services:
       volumes:
         - "${PWD}:/usr/local/pandora"
 
+    test:
+      container_name: pandora-test
+      image: pandora-test:local
+      env_file: .env
+      entrypoint: ["run_tests.sh"]
+      restart: never
+      volumes:
+        - "${PWD}:/usr/local/pandora"
+
 networks:
   stockspot:
     name: stockspot
