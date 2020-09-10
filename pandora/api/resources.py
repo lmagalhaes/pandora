@@ -77,7 +77,7 @@ class PersonResource(BaseResource):
 class CommonFriendsResource(BaseResource):
 
     routes = [
-        '/person/{id_person:int}/friends/{id_another_person:int}/'
+        '/person/{id_person:int}/common-friends/{id_another_person:int}/'
     ]
 
     def on_get(self, request, response, id_person, id_another_person):
