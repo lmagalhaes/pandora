@@ -62,14 +62,19 @@ class PersonResource(BaseResource):
             response.status = falcon.HTTP_404
             response.body = f'Person with id ({id_person}) not found'
             return
+
+        fruits, vegetables = self.separete_fruits_from_vegetables(person.foods)
+        response.body = json.dumps(dict(username=person.name, age=person.age, fruits=fruits, vegetables=vegetables))
+
+    def separete_fruits_from_vegetables(self, foods):
         fruits = []
         vegetables = []
-        for food in person.foods:
+        for food in foods:
             if food.is_fruit:
                 fruits.append(food.name)
             else:
                 vegetables.append(food.name)
-        response.body = json.dumps({'usename': person.name, 'age': person.age, 'fruits': fruits, 'vegetables': vegetables})
+        return fruits, vegetables
 
 
 class CommonFriendsResource(BaseResource):
