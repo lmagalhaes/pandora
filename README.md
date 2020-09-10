@@ -54,6 +54,15 @@ git clone https://github.com/lmagalhaes/pandora.git
 cd pandora
 ```
 
+Create a .env file based on the .env.dist file.
+```bash
+cp .env.dist .env
+```
+
+__Warning: The .env.dist contains only fake data. Please, do not push .env.dist file with real credentials.
+Instead, use .env to add your credentials because .env is being ignored by git.__
+
+ 
 Use the command `make install` to trigger the installation.
 
 ```
