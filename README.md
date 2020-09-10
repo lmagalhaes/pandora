@@ -11,17 +11,17 @@ Unfortunately, the systems are not that evolved yet, thus you need to clean and 
 For example, instead of providing a list of fruits and vegetables their citizens like, they are providing a list of favourite food, 
 and you will need to split that list (please, check below the options for fruits and vegetables).
 
-## API requisites and dependencies
+## API Requirements
 
-The Pandora API is written in [Python3.7](https://www.python.org/downloads/release/python-370/) and uses [MySQL 5.7](https://dev.mysql.com/downloads/mysql/5.7.html) database.
+The Pandora API is written in <a href="https://www.python.org/downloads/release/python-370/" target="_blank">Python3.7</a> and uses <a href="https://dev.mysql.com/downloads/mysql/5.7.html" target="_blank">MySQL 5.7</a> database.
 
-It is build on top of [Falcon web-framework](https://falcon.readthedocs.io/en/stable/index.html) with [Gunicorn](https://gunicorn.org/) and 
+It is build on top of <a href="https://falcon.readthedocs.io/en/stable/index.html" target="_blank">Falcon web-framework</a> with <a href="https://gunicorn.org/" target="_blank">Gunicorn</a> and 
 also uses:
  
-* [Pipenv](https://pipenv-fork.readthedocs.io/en/latest/) to manage the virtualenv + install packages
-* [SQLAlchemy](https://www.sqlalchemy.org/) to communicate with the DB 
-* [Alembic](https://alembic.sqlalchemy.org/en/latest/) to handle the migrations.
-* [Pytest](https://docs.pytest.org/en/stable/) to execute unit tests
+* <a href="https://pipenv-fork.readthedocs.io/en/latest/" target="_blank">Pipenv</a> to manage the virtualenv + install packages
+* <a href="https://www.sqlalchemy.org/" target="_blank">SQLAlchemy</a> to communicate with the DB 
+* <a href="https://alembic.sqlalchemy.org/en/latest/" target="_blank">Alembic</a> to handle the migrations.
+* <a href="https://docs.pytest.org/en/stable/" target="_blank">Pytest</a> to execute unit tests
 
 
 # How to install
@@ -36,11 +36,11 @@ the containers and uses of Make as our build automation tool.
 
 So, if you don't have them installed already, please follow the links below:
 
-* [Docker](https://www.docker.com/) - Instructions to [install](https://docs.docker.com/get-docker/)
+* <a href="https://www.docker.com/" target="_blank">Docker</a> - Instructions to <a href="https://docs.docker.com/get-docker/" target="_blank">install</a>
 
-* [Docker Compose] - Instruction to [install](https://docs.docker.com/compose/install/)
+* <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a> - Instruction to <a href="https://docs.docker.com/compose/install/" target="_blank">install</a>
 
-* [Make](https://en.wikipedia.org/wiki/Make_%28software%29)
+* <a href="https://en.wikipedia.org/wiki/Make_%28software%29" target="_blank">Make</a>
 
 
 ## Installation
@@ -71,7 +71,7 @@ make install
 
 The `make install` command build images, configure dependencies and install the application.
 
-When the command is finished you can access the API by accessing [127.0.0.1:8020](http://120.0.0.1:8020) in your browser.
+When the command is finished you can access the API by accessing <a href="http://localhost:8020" target="_blank">localhost:8020</a> in your browser.
 
 The message `Welcome to Pandora Api` should show up, meaning the applications is working.
 
