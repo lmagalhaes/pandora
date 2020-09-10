@@ -40,14 +40,14 @@ class CompanyResource(BaseResource):
     ]
 
     def on_get(self, request, response, id_company):
-        company: Company = self.db_session.query(Company).filter(Company.id == id_company).one_or_none()
-        if company:
-            response.body = json.dumps({
-                **dict(company),
-                'employees': [dict(employee) for employee in company.employees]})
-        else:
+        company = self.db_session.query(Company).filter(Company.id == id_company).one_or_none()
+        if not company:
             response.status = falcon.HTTP_404
             response.body = f'Company with id ({id_company}) not found'
+            return
+
+        employees = [dict(employee) for employee in company.employees]
+        response.body = json.dumps(dict(**dict(company), employees=employees))
 
 
 class PersonResource(BaseResource):
