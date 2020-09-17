@@ -1,0 +1,11 @@
+build:
+  nodes:
+    coverage:
+      environment:
+        python: 3.8.5
+      tests:
+        override:
+          - command: 'pip install pipenv && pipenv install -d && pytest'
+            coverage:
+              file: '.coverage'
+              format: 'py-cc'
