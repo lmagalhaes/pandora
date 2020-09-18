@@ -1,3 +1,8 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lmagalhaes/pandora/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lmagalhaes/pandora/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/lmagalhaes/pandora/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lmagalhaes/pandora/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/lmagalhaes/pandora/badges/build.png?b=master)](https://scrutinizer-ci.com/g/lmagalhaes/pandora/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/lmagalhaes/pandora/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 # Pandora
 Pandora is a mysterious planet. Those types of planets can support human life, for that reason the president of the Handsome Jack decides to send some people to colonise this new planet and
 reduce the number of people in their own country.
