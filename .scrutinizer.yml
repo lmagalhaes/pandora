@@ -2,7 +2,7 @@ build:
   nodes:
     coverage:
       environment:
-        python: 3.8.5
+        python: 3.7.7
       tests:
         override:
           - command: 'pip install pipenv && pipenv install -d && pytest'
