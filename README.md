@@ -18,7 +18,7 @@ and you will need to split that list (please, check below the options for fruits
 
 ## API Requirements
 
-The Pandora API is written in <a href="https://www.python.org/downloads/release/python-370/" target="_blank">Python3.7</a> and uses <a href="https://dev.mysql.com/downloads/mysql/5.7.html" target="_blank">MySQL 5.7</a> database.
+The Pandora API is written in <a href="https://www.python.org/downloads/release/python-3119/" target="_blank">Python3.11</a> and uses <a href="https://dev.mysql.com/downloads/mysql/8.0.html" target="_blank">MySQL 8</a> database.
 
 It is build on top of <a href="https://falcon.readthedocs.io/en/stable/index.html" target="_blank">Falcon web-framework</a> with <a href="https://gunicorn.org/" target="_blank">Gunicorn</a> and 
 also uses:

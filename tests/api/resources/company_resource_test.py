@@ -22,11 +22,7 @@ class TestOnGet:
 
         query_mock.filter.assert_called_once()
 
-        '''
-        # the below is done this way due to a bug found on the _Call implementation
-        # https://stackoverflow.com/questions/57636747/how-to-perform-assert-has-calls-for-a-getitem-call
-        '''
-        called_filter_input = query_mock.filter.call_args_list[0].__getitem__(0)[0]
+        called_filter_input = query_mock.filter.call_args_list[0][0][0]
         expected_filter_input = str(Company.id == 1)
         assert expected_filter_input == str(called_filter_input)
 
@@ -40,7 +36,7 @@ class TestOnGet:
         resource = CompanyResource(api=api_mock)
         resource.on_get(falcon_request, falcon_response, 0)
 
-        assert 'Company with id (0) not found' == falcon_response.body
+        assert 'Company with id (0) not found' == falcon_response.text
         assert HTTP_404 == falcon_response.status
 
     def test_return_company_details(self, falcon_request, falcon_response, db_session_mock):
@@ -61,7 +57,7 @@ class TestOnGet:
             name=company.name,
             employees=company.employees
         ))
-        assert expected_response == falcon_response.body
+        assert expected_response == falcon_response.text
 
     def test_return_details_with_list_of_employees(
             self,
@@ -91,4 +87,4 @@ class TestOnGet:
             name=company.name,
             employees=[dict(employees) for employees in company.employees]
         ))
-        assert expected_response == falcon_response.body
+        assert expected_response == falcon_response.text

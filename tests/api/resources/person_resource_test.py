@@ -21,11 +21,7 @@ class TestOnGet:
 
         query_mock.filter.assert_called_once()
 
-        '''
-        # the below is done this way due to a bug found on the _Call implementation
-        # https://stackoverflow.com/questions/57636747/how-to-perform-assert-has-calls-for-a-getitem-call
-        '''
-        called_filter_input = query_mock.filter.call_args_list[0].__getitem__(0)[0]
+        called_filter_input = query_mock.filter.call_args_list[0][0][0]
         expected_filter_input = str(Person.id == 1)
         assert expected_filter_input == str(called_filter_input)
 

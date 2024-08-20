@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy_utils.types import EmailType, ScalarListType
 from dictalchemy import DictableModel
 
@@ -130,4 +129,3 @@ class Food(BaseModel, Base):
         secondary=__person_likes_food_table_name__,
         back_populates='foods'
     )
-
