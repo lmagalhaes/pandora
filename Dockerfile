@@ -1,4 +1,4 @@
-FROM python:3.7-buster as prod-image
+FROM python:3.11-bookworm AS prod-image
 
 RUN pip install -U pip pipenv
 
@@ -17,6 +17,6 @@ ENV APP_BIN="${APP_HOME}/pandora/bin"
 ENV PATH="${APP_HOME}:${APP_BIN}:${PATH}"
 
 
-FROM prod-image as test
+FROM prod-image AS test
 
 RUN pipenv install -d --system

@@ -27,28 +27,28 @@ help:
 .PHONY: help
 
 build:
-	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local" --target prod-image .
+	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-api:local"  --no-cache --target prod-image .
 	DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t"pandora-test:local" --target test .
 
 install: |build init_db load_db start
 
 uninstall: |stop
-	docker-compose down --remove-orphans -v
+	docker compose down --remove-orphans -v
 
 init_db:
-	docker-compose run init-db
+	docker compose run init-db
 
 load_db:
-	docker-compose run load-db-data
+	docker compose run load-db-data
 
 start:
-	docker-compose up -d api
+	docker compose up -d api
 
 stop:
-	docker-compose stop
+	docker compose stop
 
 status:
 	docker ps | grep pandora
 
 test:
-	docker-compose run test
+	docker compose run test

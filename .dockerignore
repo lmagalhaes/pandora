@@ -1,0 +1,7 @@
+# IDEs
+.idea
+
+# Project files
+.env
+.coverage
+docker-compose.yml
