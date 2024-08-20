@@ -27,7 +27,7 @@ class BaseResource:
 
 class WelcomeResource(BaseResource):
     def on_get(self, request, response):
-        response.body = 'Welcome to Pandora Api'
+        response.text = 'Welcome to Pandora Api'
 
 
 class CompanyResource(BaseResource):
@@ -40,11 +40,11 @@ class CompanyResource(BaseResource):
         company = self.db_session.query(Company).filter(Company.id == id_company).one_or_none()
         if not company:
             response.status = falcon.HTTP_404
-            response.body = f'Company with id ({id_company}) not found'
+            response.text = f'Company with id ({id_company}) not found'
             return
 
         employees = [dict(employee) for employee in company.employees]
-        response.body = json.dumps(dict(**dict(company), employees=employees))
+        response.text = json.dumps(dict(**dict(company), employees=employees))
 
 
 class PersonResource(BaseResource):
@@ -57,11 +57,11 @@ class PersonResource(BaseResource):
         person = self.db_session.query(Person).filter(Person.id == id_person).one_or_none()
         if not person:
             response.status = falcon.HTTP_404
-            response.body = f'Person with id ({id_person}) not found'
+            response.text = f'Person with id ({id_person}) not found'
             return
 
         fruits, vegetables = self.separete_fruits_from_vegetables(person.foods)
-        response.body = json.dumps(dict(username=person.name, age=person.age, fruits=fruits, vegetables=vegetables))
+        response.text = json.dumps(dict(username=person.name, age=person.age, fruits=fruits, vegetables=vegetables))
 
     def separete_fruits_from_vegetables(self, foods):
         fruits = []
@@ -86,7 +86,7 @@ class CommonFriendsResource(BaseResource):
 
         if len(people) != 2:
             missing_id = id_person if people[0].id == id_another_person else id_another_person
-            response.body = 'Person with id ({}) not found'.format(missing_id)
+            response.text = 'Person with id ({}) not found'.format(missing_id)
             response.status = falcon.HTTP_404
             return
 
@@ -97,7 +97,7 @@ class CommonFriendsResource(BaseResource):
             if self.filter_in(friend)
         ]
 
-        response.body = json.dumps(dict(
+        response.text = json.dumps(dict(
             person1=dict(person),
             person2=dict(another_person),
             common_friends=commons_friends
@@ -105,4 +105,3 @@ class CommonFriendsResource(BaseResource):
 
     def filter_in(self, person):
         return not bool(person.has_died) and person.eye_color == 'brown'
-
